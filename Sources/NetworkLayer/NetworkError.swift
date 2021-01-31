@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum NetworkError: Error {
+public enum NetworkError: Error {
     case noNetwork
     case parsingError(String)
     case unknown(String)
