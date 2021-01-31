@@ -7,11 +7,10 @@
 
 import Foundation
 
+public typealias onCompletion = (Any?, NetworkError?)->()
 
-typealias onCompletion = (Any?, NetworkError?)->()
 
-
-protocol WebAPIProtocol {
+public protocol WebAPIProtocol {
     var session: URLSession {get set}
     func requestData(apiRequest: APIRequest, completion: @escaping onCompletion)
 }
@@ -21,9 +20,9 @@ public class ServiceApi: WebAPIProtocol {
     static let shared = ServiceApi()
     private let cache = LRUCache<String,Data>(capacity: 3)
     private var task: URLSessionTask?
-    var session: URLSession
+    public var session: URLSession
     
-    init(session: URLSession = URLSession.shared) {
+    public init(session: URLSession = URLSession.shared) {
         self.session = session
     }
     
@@ -40,7 +39,7 @@ public class ServiceApi: WebAPIProtocol {
         return task
     }
     
-    func requestData(apiRequest: APIRequest, completion: @escaping onCompletion){
+    public func requestData(apiRequest: APIRequest, completion: @escaping onCompletion){
         
         if let request = apiRequest.makeRequest() {
             let urlString = request.url?.absoluteString ?? ""
